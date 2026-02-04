@@ -1,0 +1,11 @@
+{
+  "apis": [
+    {
+      "name": "get-pets",
+      "api_id": "28f06bf0-cd36-41ce-ab0d-2d5726a86140",
+      "base_url": {
+        "production": "https://beta-api.apitect.com/workspace-2-2af2bffa/pets"
+      }
+    }
+  ]
+}
