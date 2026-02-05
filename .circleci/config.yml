@@ -3,7 +3,6 @@ version: 2.1
 jobs:
   api-tests:
     docker:
-      # We use a primary image that has Docker installed
       - image: cimg/base:stable
     steps:
       - checkout
@@ -12,11 +11,20 @@ jobs:
       - run:
           name: Run APITECT Test Runner
           command: |
-            docker run --rm \
-              -v /.apitect:/app/.apitect \
+            # 1. Create the container (but don't start it yet)
+            # We give it a name so we can reference it in the next step
+            docker create --name runner \
               -e APITECT_API_KEY="$APITECT_API_KEY" \
               -e ENVIRONMENT="$ENVIRONMENT" \
               apoorvbhatt/apoorv-abc-test:latest
+
+            # 2. Copy the config folder from CircleCI's local disk into the container
+            # This solves the "Configuration file not found" issue
+            docker cp .apitect/. runner:/app/.apitect
+
+            # 3. Start the container and follow the output
+            # -a (attach) ensures logs are sent to your CircleCI console
+            docker start -a runner
 
 workflows:
   version: 2
