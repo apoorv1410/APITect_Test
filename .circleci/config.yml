@@ -1,0 +1,11 @@
+api-tests:
+  stage: test
+  image: docker:latest
+  services:
+    - docker:dind
+  script:
+    - docker run --rm
+        -v $(pwd)/.apitect:/app/.apitect
+        -e APITECT_API_KEY="$APITECT_API_KEY"
+        -e ENVIRONMENT="$ENVIRONMENT"
+        apoorvbhatt/apoorv-abc-test:latest
