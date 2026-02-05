@@ -1,11 +1,25 @@
-api-tests:
-  stage: test
-  image: docker:latest
-  services:
-    - docker:dind
-  script:
-    - docker run --rm
-        -v $(pwd)/.apitect:/app/.apitect
-        -e APITECT_API_KEY="$APITECT_API_KEY"
-        -e ENVIRONMENT="$ENVIRONMENT"
-        apoorvbhatt/apoorv-abc-test:latest
+version: 2.1
+
+jobs:
+  api-tests:
+    docker:
+      # We use a primary image that has Docker installed
+      - image: cimg/base:stable
+    steps:
+      - checkout
+      - setup_remote_docker:
+          version: default
+      - run:
+          name: Run APITECT Test Runner
+          command: |
+            docker run --rm \
+              -v $(pwd)/.apitect:/app/.apitect \
+              -e APITECT_API_KEY="$APITECT_API_KEY" \
+              -e ENVIRONMENT="$ENVIRONMENT" \
+              apoorvbhatt/apoorv-abc-test:latest
+
+workflows:
+  version: 2
+  test-workflow:
+    jobs:
+      - api-tests
