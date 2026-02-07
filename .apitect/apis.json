@@ -1,8 +1,8 @@
 {
   "apis": [
     {
-      "name": "get-pets-by-id",
-      "api_id": "a08101fe-2836-4879-8491-78c5f2f1aed2",
+      "name": "user-by-id",
+      "api_id": "d3553983-d0be-4f08-9c44-c0a9421f1a33",
       "base_url": {
         "production": "https://api.apitect.com/swagger-import-2-01c059e3/"
       }
